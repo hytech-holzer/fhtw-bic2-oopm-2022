@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor User
+
+User -> BookingUI : bucheFlug
+User <- BookingUI : enter Anzahl Passagiere
+
+BookingUI -> BookingSystem : isAnzahlAvailable
+BookingUI <-- BookingSystem
+
+alt available = true
+
+    loop anzahlPassagiere
+        User -> BookingUI : enter Passagier Daten
+        opt sitzplatzwahl gewuenscht
+            User -> BookingUI : chooseSeat
+        end
+        BookingUI -> BookingSystem : save
+        BookingSystem -> Ticket ** : create
+    end
+    User <-- BookingUI : Buchung OK
+else available = false
+    User <-- BookingUI : Leider nicht verfuegbar
+end
+
+
+
+
+
+
+
+@enduml
